@@ -26,15 +26,6 @@ sudo sh get-docker.sh
 
 sudo apt-get -y install docker-compose
 
-sudo mkdir -p /data/npm
-sudo docker run -d -p 80:80 -p 443:443 -p 81:81 --name npm --restart=unless-stopped -v /data:/data -v /letsencrypt:/etc/letsencrypt jc21/nginx-proxy-manager:latest
-
-sudo mkdir -p /data/portainer
-sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
-
-sudo docker network create npm-net
-sudo docker network connect npm-net npm
-sudo docker network connect npm-net portainer
 
 ip="$(curl --silent icanhazip.com)"
 echo ""
@@ -42,15 +33,3 @@ echo ""
 echo "===== oci boot script ====="
 echo ""
 echo "부트 스크립트 설정이 완료되었습니다."
-echo ""
-echo "- Nginx Proxy Manager"
-echo "http://$ip:81"
-echo ""
-echo "- NPM 기본 로그인"
-echo "Email: admin@example.com"
-echo "Password: changeme"
-echo ""
-echo "- Portainer"
-echo "http://$ip:8000"
-echo ""
-echo "NPM과 다른 컨테이너를 연결하려면 npm-net 네트워크에 연결하세요."
